@@ -17,7 +17,7 @@ function InvoiceRow({ invoice }) {
         </Link>
       </td>
       <td className="text-surface-300">Tháng {invoice.billing_month}/{invoice.billing_year}</td>
-      <td className="text-surface-400 hidden sm:table-cell">{invoice.tenants?.full_name || '—'}</td>
+      <td className="text-surface-400 hidden sm:table-cell">{invoice.rooms?.tenants?.[0]?.full_name || '—'}</td>
       <td className="font-semibold text-surface-100">{formatCurrency(invoice.total_amount)}</td>
       <td>
         <span className={isPaid ? 'badge-paid' : 'badge-unpaid'}>
