@@ -12,7 +12,7 @@ import { formatCurrency, formatDate } from '../lib/utils'
 
 const InvoicePrintArea = forwardRef(function InvoicePrintArea({ invoice, settings }, printRef) {
   const room = invoice.rooms
-  const tenant = invoice.tenants
+  const tenant = room?.tenants?.[0]
   const isPaid = invoice.status === 'paid'
 
   return (

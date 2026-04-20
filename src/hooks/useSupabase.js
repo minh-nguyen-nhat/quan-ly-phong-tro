@@ -105,8 +105,10 @@ export function useInvoices(month, year) {
       .from('invoices')
       .select(`
         *,
-        rooms(name),
-        tenants(full_name)
+        rooms(
+          name,
+          tenants(full_name)
+        )
       `)
       .eq('user_id', user?.id)
       .order('created_at', { ascending: false })
@@ -130,8 +132,11 @@ export function useInvoice(id) {
       .from('invoices')
       .select(`
         *,
-        rooms(name, default_price),
-        tenants(full_name, phone, deposit)
+        rooms(
+          name, 
+          default_price, 
+          tenants(full_name, phone, deposit)
+        )
       `)
       .eq('id', id)
       .single()
