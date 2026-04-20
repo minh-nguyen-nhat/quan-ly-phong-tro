@@ -41,14 +41,15 @@ export default function InvoicesPage() {
 
   const { data: invoices = [], loading } = useInvoices(filterMonth, filterYear)
 
-  const filtered = invoices.filter(inv => {
+  const safeInvoices = invoices || []
+  const filtered = safeInvoices.filter(inv => {
     if (filterStatus === 'paid') return inv.status === 'paid'
     if (filterStatus === 'unpaid') return inv.status === 'unpaid'
     return true
   })
 
-  const totalAmount = invoices.reduce((s, inv) => s + (inv.total_amount || 0), 0)
-  const paidAmount = invoices.filter(i => i.status === 'paid').reduce((s, i) => s + (i.total_amount || 0), 0)
+  const totalAmount = safeInvoices.reduce((s, inv) => s + (inv.total_amount || 0), 0)
+  const paidAmount = safeInvoices.filter(i => i.status === 'paid').reduce((s, i) => s + (i.total_amount || 0), 0)
   const unpaidAmount = totalAmount - paidAmount
 
   const monthOptions = getMonthOptions()
@@ -59,7 +60,7 @@ export default function InvoicesPage() {
       <div className="page-header flex-wrap gap-3">
         <div>
           <h1 className="page-title">Hóa đơn</h1>
-          <p className="text-sm text-surface-400">{invoices.length} hóa đơn tháng {filterMonth}/{filterYear}</p>
+          <p className="text-sm text-surface-400">{safeInvoices.length} hóa đơn tháng {filterMonth}/{filterYear}</p>
         </div>
       </div>
 
